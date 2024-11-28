@@ -20,13 +20,13 @@ while(!gameOver)
     switch (userMenuSelection)
     {
         case 1:
-            score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '+', difficultyLevel);
+            score += await PerformOperation(mathGame, firstNumber, secondNumber, '+', difficultyLevel);
             break;
         case 2:
-            score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '-', difficultyLevel);
+            score += await PerformOperation(mathGame, firstNumber, secondNumber, '-', difficultyLevel);
             break;
         case 3:
-            score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '*', difficultyLevel);
+            score += await PerformOperation(mathGame, firstNumber, secondNumber, '*', difficultyLevel);
             break;
         case 4:
             while(firstNumber % secondNumber !=0)
@@ -34,7 +34,7 @@ while(!gameOver)
                 firstNumber = random.Next(1,101);
                 secondNumber = random.Next(1,101);
             }
-            score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '/', difficultyLevel);
+            score += await PerformOperation(mathGame, firstNumber, secondNumber, '/', difficultyLevel);
             break;
         case 5:
             int numberOfQuestions = 99;
@@ -51,19 +51,19 @@ while(!gameOver)
                 {
                     firstNumber = random.Next(1,101);
                     secondNumber = random.Next(1,101);
-                    score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '+', difficultyLevel);
+                    score += await PerformOperation(mathGame, firstNumber, secondNumber, '+', difficultyLevel);
                 }
                 else if(randomOperation == 2)
                 {   
                     firstNumber = random.Next(1,101);
                     secondNumber = random.Next(1,101);
-                    score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '-', difficultyLevel);
+                    score += await PerformOperation(mathGame, firstNumber, secondNumber, '-', difficultyLevel);
                 }
                 else if(randomOperation == 3)
                 {   
                     firstNumber = random.Next(1,101);
                     secondNumber = random.Next(1,101);
-                    score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '*', difficultyLevel);
+                    score += await PerformOperation(mathGame, firstNumber, secondNumber, '*', difficultyLevel);
                 }
                 else if(randomOperation == 4)
                 {   
@@ -74,7 +74,7 @@ while(!gameOver)
                         firstNumber = random.Next(1,101);
                         secondNumber = random.Next(1,101);
                     }
-                    score += await PerformOperation(mathGame, firstNumber, secondNumber, score, '/', difficultyLevel);
+                    score += await PerformOperation(mathGame, firstNumber, secondNumber, '/', difficultyLevel);
                 }
 
                 numberOfQuestions--;
@@ -180,12 +180,13 @@ static async Task<int?> GetUserResponse(DifficultyLevel difficulty)
     }
 }
 
-static int ValidateResult(int result, int? userResponse, int score)
+static int ValidateResult(int result, int? userResponse)
 {
+    int score = 0;
     if (result == userResponse)
     {
         Console.WriteLine("Correct!; 5 Points");
-        score += 5;
+        score = 5;
     }
     else
     {
@@ -195,14 +196,14 @@ static int ValidateResult(int result, int? userResponse, int score)
     return score;
 }
 
-static async Task<int> PerformOperation(MathGameLogic mathGame, int firstNumber, int secondNumber, int score, char operation, DifficultyLevel difficulty)
+static async Task<int> PerformOperation(MathGameLogic mathGame, int firstNumber, int secondNumber, char operation, DifficultyLevel difficulty)
 {
     int result;
     int? userResponse;
     DisplayMathGameQuestion(firstNumber, secondNumber, operation);
     result = mathGame.MathOperation(firstNumber, secondNumber, operation);
     userResponse = await GetUserResponse(difficulty);
-    score += ValidateResult(result, userResponse, score);
+    int score = ValidateResult(result, userResponse);
     return score;
 }
 
